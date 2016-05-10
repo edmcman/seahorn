@@ -204,6 +204,8 @@ int main(int argc, char **argv) {
   }
   if (dl) pass_manager.add (new llvm::DataLayoutPass ());
 
+  pass_manager.add (seahorn::createDummyExternsPass ());
+  if (false) {
   // -- Create a main function if we do not have one.
   pass_manager.add (new seahorn::DummyMainFunction ());
  
@@ -338,7 +340,7 @@ int main(int argc, char **argv) {
   
   
   pass_manager.add (llvm::createVerifierPass());
-    
+  }
   if (!OutputFilename.empty ()) 
   {
     if (OutputAssembly)
