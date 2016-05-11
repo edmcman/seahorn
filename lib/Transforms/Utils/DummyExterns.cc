@@ -42,13 +42,13 @@ namespace
 
           IRBuilder<> builder(bb);
           Constant *str = ConstantDataArray::getString (getGlobalContext (), f.getName ());
-          GlobalVariable *g = new GlobalVariable(M,
+          Value *g = new GlobalVariable(M,
                            str->getType (),
                            true,
                            GlobalValue::PrivateLinkage,
                            str);
 
-          builder.CreateCall(stub, {g});
+          builder.CreateCall(stub, makeArrayRef(g));
           Type *rettype = f.getReturnType ();
           if (rettype->isVoidTy ())
             builder.CreateRetVoid ();
