@@ -65,6 +65,11 @@ OutputFilename("o", llvm::cl::desc("Override output filename"),
 static llvm::cl::opt<bool>
 OutputAssembly("S", llvm::cl::desc("Write output as LLVM assembly"));
 
+static llvm::cl::opt<bool>
+DummyExterns("dummy-externs",
+             llvm::cl::desc ("Add stub implementations for extern functions and globals"),
+             llvm::cl::init (false));
+
 static llvm::cl::opt<std::string>
 DefaultDataLayout("default-data-layout",
                   llvm::cl::desc("data layout string to use if not specified by module"),
@@ -204,8 +209,10 @@ int main(int argc, char **argv) {
   }
   if (dl) pass_manager.add (new llvm::DataLayoutPass ());
 
-  pass_manager.add (seahorn::createDummyExternsPass ());
-  if (false) {
+  if (DummyExterns) {
+    pass_manager.add (seahorn::createDummyExternsPass ());
+  }
+  else {
   // -- Create a main function if we do not have one.
   pass_manager.add (new seahorn::DummyMainFunction ());
  

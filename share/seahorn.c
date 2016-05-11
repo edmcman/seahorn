@@ -23,7 +23,7 @@ void __seahorn_extern_stub (char *fname) {
 #define get_value_helper(ctype, llvmtype)                               \
   ctype __seahorn_get_value_ ## llvmtype (int ctr, ctype *g_arr, int g_arr_sz) { \
     assert (ctr < g_arr_sz && "Unexpected index");                      \
-    printf("__seahorn_get_value_" #llvmtype " returning %x.\n", g_arr[ctr]); \
+    printf("__seahorn_get_value_" #llvmtype " returning %lx.\n", (long) (g_arr[ctr])); \
     return g_arr[ctr];                                                  \
   }
 

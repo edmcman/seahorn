@@ -25,21 +25,19 @@ namespace
         for (auto &g : M.globals ()) {
           if (!g.hasInitializer ()) {
             g.setInitializer (Constant::getNullValue (g.getType ()));
-            g.dump ();
+            //g.dump ();
           }
         }
         for (auto &f : M.functions ()) {
           if (!f.empty ()) continue;
           if (f.getIntrinsicID () != Intrinsic::not_intrinsic) continue;
-          if (f.getName () == "malloc" ||
-              f.getName () == "calloc" ||
-              f.getName () == "__seahorn_extern_stub" ||
+          if (f.getName () == "__seahorn_extern_stub" ||
               f.getName () == "exit" ||
+              f.getName () == "__assert_fail" ||
               f.getName () == "printf") continue;
 
-          errs () << f.getName () << "\n";
-          f.dump ();
-          // XXX: Call a runtime function
+          //errs () << f.getName () << "\n";
+          //f.dump ();
           BasicBlock *bb = BasicBlock::Create(getGlobalContext(), "entry", &f);
 
           IRBuilder<> builder(bb);
