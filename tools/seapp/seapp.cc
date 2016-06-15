@@ -65,6 +65,11 @@ OutputFilename("o", llvm::cl::desc("Override output filename"),
 static llvm::cl::opt<bool>
 OutputAssembly("S", llvm::cl::desc("Write output as LLVM assembly"));
 
+static llvm::cl::opt<bool>
+DummyExterns("dummy-externs",
+             llvm::cl::desc ("Add stub implementations for extern functions and globals"),
+             llvm::cl::init (false));
+
 static llvm::cl::opt<std::string>
 DefaultDataLayout("default-data-layout",
                   llvm::cl::desc("data layout string to use if not specified by module"),
@@ -220,6 +225,8 @@ int main(int argc, char **argv) {
 
   if (KleeInternalize)
     pass_manager.add (seahorn::createKleeInternalizePass ());
+  else if (DummyExterns)
+    pass_manager.add (seahorn::createDummyExternsPass ());
   else if (WrapMem)
     pass_manager.add (seahorn::createWrapMemPass ());
   else
@@ -363,7 +370,7 @@ int main(int argc, char **argv) {
   }
   
   pass_manager.add (llvm::createVerifierPass());
-    
+
   if (!OutputFilename.empty ()) 
   {
     if (OutputAssembly)

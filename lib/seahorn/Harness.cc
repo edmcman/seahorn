@@ -58,7 +58,7 @@ namespace seahorn
           const Function *CF = CS.getCalledFunction ();
           if (!CF) continue;
 
-          errs () << "Looking at: " << CF->getName () << "\n";
+          // errs () << "Looking at: " << CF->getName () << "\n";
 
           if (!CF->hasName()) continue;
           if (CF->getName().find_first_of('.') != StringRef::npos) continue;

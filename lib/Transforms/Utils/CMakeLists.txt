@@ -1,5 +1,6 @@
 add_llvm_library(SeaTransformsUtils
   DummyExitBlock.cc
+  DummyExterns.cc
   Local.cc
   MarkInternalInline.cc
   NameValues.cpp
